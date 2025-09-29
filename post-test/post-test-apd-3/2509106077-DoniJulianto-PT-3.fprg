@@ -4,9 +4,9 @@
         <attribute name="name" value="2509106077-DoniJulianto-PT-3"/>
         <attribute name="authors" value="user"/>
         <attribute name="about" value=""/>
-        <attribute name="saved" value="2025-09-29 05:54:26 PM"/>
+        <attribute name="saved" value="2025-09-29 08:26:58 PM"/>
         <attribute name="created" value="dXNlcjtWSUNUVVMtMTUtUFJPLU07MjAyNS0wOS0yOTswMzozOTowMCBQTTsyNzY4"/>
-        <attribute name="edited" value="dXNlcjtWSUNUVVMtMTUtUFJPLU07MjAyNS0wOS0yOTswNTo1NDoyNiBQTTsyOzI4ODQ="/>
+        <attribute name="edited" value="dXNlcjtWSUNUVVMtMTUtUFJPLU07MjAyNS0wOS0yOTswODoyNjo1OCBQTTszOzI4OTI="/>
     </attributes>
     <function name="Main" type="None" variable="">
         <parameters/>
@@ -16,6 +16,7 @@
             <assign variable="datanama" expression="&quot;DoniJulianto&quot;"/>
             <assign variable="datanim" expression="&quot;2509106077&quot;"/>
             <assign variable="UKT" expression="6000000"/>
+            <output expression="&quot;&lt;--LOGIN MAHASISWA--&gt;&quot;" newline="True"/>
             <output expression="&quot;Masukkan Nama Anda&quot;" newline="True"/>
             <input variable="nama"/>
             <output expression="&quot;Masukkan NIM anda&quot;" newline="True"/>
