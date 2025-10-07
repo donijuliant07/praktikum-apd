@@ -2,7 +2,7 @@
 
 # Data login yang valid
 valid_username = "DoniJulianto"
-valid_password = "doniaja123"
+valid_password = "2509106077"
 
 # Inisialisasi variabel
 total_bayar = 0
