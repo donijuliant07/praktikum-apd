@@ -1,5 +1,6 @@
 from data import bookings, booking_id_counter
 from prettytable import PrettyTable
+from datetime import datetime
 
 def tambah_penyewaan(username):
     global booking_id_counter
@@ -8,12 +9,20 @@ def tambah_penyewaan(username):
         jam = input("Jam (HH:MM): ")
         lapangan = input("Nomor lapangan: ")
         
+        try:
+            waktu = datetime.strptime(f"{tanggal} {jam}", "%d-%m-%Y %H:%M")
+        except ValueError:
+            raise ValueError("Format tanggal atau jam tidak valid. Gunakan format dd-mm-yyyy dan HH:MM.")
+        
+        if waktu < datetime.now():
+            raise ValueError("Waktu sewa tidak boleh di masa lalu")
+        
         if not tanggal or not jam or not lapangan:
             raise ValueError("Semua data harus diisi.")
+        
         bookings[str(booking_id_counter)] = {
             "username": username,
-            "tanggal": tanggal,
-            "jam": jam,
+            "waktu": waktu.strftime("%d-%m-%Y %H:%M"),
             "lapangan": lapangan
         }
         booking_id_counter += 1
@@ -25,25 +34,25 @@ def tambah_penyewaan(username):
 
 def tampilkan_semua_penyewaan():
     try:
-        table = PrettyTable(["No", "User", "Tanggal", "Jam", "Lapangan"])
+        table = PrettyTable(["No", "User", "waktu", "Lapangan"])
         if not bookings:
             print("Belum ada data penyewaan.")
         else:
             for i, (id, b) in enumerate(bookings.items(), start=1):
-                table.add_row([i, b["username"], b["tanggal"], b["jam"], b["lapangan"]])
+                table.add_row([i, b["username"], b["waktu"], b["lapangan"]])
             print(table)
     except Exception as e:
         print(f" Gagal menampilkan data: {e}")
 
 def tampilkan_user(username):
     try:
-        table = PrettyTable(["No", "Tanggal", "Jam", "Lapangan"])
+        table = PrettyTable(["No", "waktu", "Lapangan"])
         user_data = [(id, b) for id, b in bookings.items() if b["username"] == username]
         if not user_data:
             print("Belum ada penyewaan.")
         else:
             for i, (id, b) in enumerate(user_data, start=1):
-                table.add_row([i, b["tanggal"], b["jam"], b["lapangan"]])
+                table.add_row([i, b["waktu"], b["lapangan"]])
             print(table)
         return user_data
     except Exception as e:
@@ -58,9 +67,19 @@ def ubah_penyewaan(username):
         idx = int(input("Nomor yang ingin diubah: ")) - 1
         if idx < 0 or idx >= len(user_data):
             raise IndexError("Nomor tidak valid.")
+        
         tanggal = input("Tanggal baru: ")
         jam = input("Jam baru: ")
         lapangan = input("Lapangan baru: ")
+
+        try:
+            waktu = datetime.strptime(f"{tanggal} {jam}", "%d-%m-%Y %H:%M")
+        except ValueError:
+            raise ValueError("Format tanggal atau jam tidak valid. Gunakan format dd-mm-yyyy dan HH:MM.")
+        
+        if waktu < datetime.now():
+            raise ValueError("Waktu sewa tidak boleh di masa lalu")
+        
         if not tanggal or not jam or not lapangan:
             raise ValueError("Semua data harus diisi.")
         id_to_update = user_data[idx][0]
@@ -92,9 +111,9 @@ def hapus_penyewaan(username):
             return
 
         from prettytable import PrettyTable
-        table = PrettyTable(["No", "User", "Tanggal", "Jam", "Lapangan"])
+        table = PrettyTable(["No", "User", "waktu", "Lapangan"])
         for i, (id, b) in enumerate(data_target, start=1):
-            table.add_row([i, b["username"], b["tanggal"], b["jam"], b["lapangan"]])
+            table.add_row([i, b["username"], b["waktu"], b["lapangan"]])
         print(table)
 
         idx = int(input("Nomor yang ingin dihapus: ")) - 1
@@ -110,4 +129,6 @@ def hapus_penyewaan(username):
         print(f" {ie}")
     except Exception as e:
         print(f" Kesalahan saat hapus data: {e}")
+
+
 
